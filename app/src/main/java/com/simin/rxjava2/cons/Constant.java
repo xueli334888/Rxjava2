@@ -17,6 +17,7 @@ public class Constant {
         public static final String VEDIO_DIR = "vedio/";
         public static final String IMAGE_DIR = "image/";
         public static final String DB_DIR = "db/";
+        public static final String FILE_DIR = "file/";
         public static final String SP_NAME = SystemConfig.SAVE_ROOT + "SP";
     }
 

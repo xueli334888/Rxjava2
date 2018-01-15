@@ -5,8 +5,14 @@ import android.os.Environment;
 
 import com.simin.rxjava2.cons.Constant;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 /**
  * 获取各种文件路径
@@ -101,6 +107,28 @@ public class FileUtil {
         return dir;
     }
 
+    public static File getAppFileDir(Context context) {
+        File appDir = getAppDir(context);
+        File dir = new File(appDir, Constant.FilePath.FILE_DIR);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        return dir;
+    }
+
+    public static File getAppFile(Context context, String fileName) {
+        File filedir = getAppFileDir(context);
+        File file = new File(filedir.getAbsolutePath(), fileName);
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
     public static File getApkFile(Context context) {
         File appDir = getAppDir(context);
         File dir = new File(appDir.getAbsolutePath(), Constant.DownLoad.DOWNLOAD_FILENAME);
@@ -124,6 +152,25 @@ public class FileUtil {
             e.printStackTrace();
         }
         return file;
+    }
+
+    public static void saveFile(Response<ResponseBody> response, File savePath) {
+        try {
+            InputStream is = response.body().byteStream();
+            FileOutputStream fos = new FileOutputStream(savePath);
+            BufferedInputStream bis = new BufferedInputStream(is);
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = bis.read(buffer)) != -1) {
+                fos.write(buffer, 0, len);
+                fos.flush();
+            }
+            fos.close();
+            bis.close();
+            is.close();
+        } catch (Exception e) {
+            LogUtil.d(LogUtil.TAG, e.toString());
+        }
     }
 
     public static boolean deleteFile(String filePath) {

@@ -1,10 +1,13 @@
 package com.simin.rxjava2.act;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewStub;
+import android.widget.TextView;
 
 import com.simin.rxjava2.BaseApplication;
 import com.simin.rxjava2.R;
@@ -22,8 +25,15 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     BaseApplication app;
 
     ViewStub stub;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
+    @BindView(R.id.tv_left)
+    TextView tv_left;
+    @BindView(R.id.tv_right)
+    TextView tv_right;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,4 +66,20 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     protected abstract @LayoutRes
     int getLayoutId();
+
+    protected void setTitleName(@StringRes int resId) {
+        tv_title.setText(resId);
+    }
+
+    protected void setTitleName(String resValue) {
+        tv_title.setText(resValue);
+    }
+
+    protected void setLeft(@StringRes int resId) {
+        tv_left.setText(resId);
+    }
+
+    protected void setRight(@StringRes int resId) {
+        tv_right.setText(resId);
+    }
 }

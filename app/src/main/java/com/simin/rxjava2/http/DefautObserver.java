@@ -8,6 +8,7 @@ import com.simin.rxjava2.BaseApplication;
 import com.simin.rxjava2.R;
 import com.simin.rxjava2.http.entity.Response;
 import com.simin.rxjava2.http.entity.Page;
+import com.simin.rxjava2.http.model.BaseModel;
 import com.simin.rxjava2.interfaces.DialogI;
 import com.simin.rxjava2.utils.LogUtil;
 import com.simin.rxjava2.utils.ToastUtil;

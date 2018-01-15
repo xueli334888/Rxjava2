@@ -30,6 +30,6 @@ public class Header implements Serializable {
      */
     public String PLATFORM = Build.BRAND + "," + SystemConfig.APP_OS + "," + Build.VERSION.RELEASE;
 
-    public String DEVICE_ID = "865002029386653";//DeviceInfo.getIMEI(BaseApplication.getSelf());
+    public String DEVICE_ID = DeviceInfo.getIMEI(BaseApplication.getSelf());;//DeviceInfo.getIMEI(BaseApplication.getSelf());
 
 }

@@ -4,7 +4,17 @@
                                    android:layout_width="match_parent"
                                    android:layout_height="wrap_content"
                                    android:background="@color/colorPrimary"
-                                   android:minHeight="?attr/actionBarSize">
+                                   android:minHeight="?android:attr/actionBarSize">
+
+    <TextView
+        android:id="@+id/tv_left"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:maxLines="1"
+        android:text="left"
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:id="@+id/tv_right"
@@ -12,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:layout_marginRight="@dimen/dp_one_zero"
         android:maxLines="1"
-        android:paddingRight="10dp"
         android:text="right"
         android:textColor="@android:color/white"/>
 

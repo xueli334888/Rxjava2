@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @Description: 登录用户, 及联络人
  * @date 2015-12-28 下午3:45:04
  */
-public class User implements Serializable {
+public class User extends BaseModel implements Serializable {
 
     private String loginid;
     private String orgid;
@@ -171,5 +171,28 @@ public class User implements Serializable {
 
     public void setQrcodepath(String qrcodepath) {
         this.qrcodepath = qrcodepath;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "loginid='" + loginid + '\'' +
+                ", orgid='" + orgid + '\'' +
+                ", orgname='" + orgname + '\'' +
+                ", imagepath='" + imagepath + '\'' +
+                ", registerid='" + registerid + '\'' +
+                ", opername='" + opername + '\'' +
+                ", rolename='" + rolename + '\'' +
+                ", operphone='" + operphone + '\'' +
+                ", operid='" + operid + '\'' +
+                ", fax='" + fax + '\'' +
+                ", orgphone='" + orgphone + '\'' +
+                ", formname='" + formname + '\'' +
+                ", appupdate='" + appupdate + '\'' +
+                ", appupdatepath='" + appupdatepath + '\'' +
+                ", topmanager='" + topmanager + '\'' +
+                ", demandFormName='" + demandFormName + '\'' +
+                ", qrcodepath='" + qrcodepath + '\'' +
+                '}';
     }
 }

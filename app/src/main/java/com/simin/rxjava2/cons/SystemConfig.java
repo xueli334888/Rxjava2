@@ -1,5 +1,7 @@
 package com.simin.rxjava2.cons;
 
+import com.simin.rxjava2.BaseApplication;
+
 /**
  * App基本配置
  * 打包地址配置
@@ -11,7 +13,7 @@ public class SystemConfig {
     /**
      * 数据存储根路径
      */
-    public static String SAVE_ROOT = "ZYD";
+    public static String SAVE_ROOT = "Rxjava";
 
     /**
      * SD卡数据库存储名称
@@ -19,7 +21,8 @@ public class SystemConfig {
     public static String DB_NAME = SAVE_ROOT + ".db";
 
     public static String BASE_SERVICE_URL = "http://112.6.110.50:6012/";
-    public static String BASE_SERVICE_URL_DEBUG = "http://112.6.110.50:6012/";
+    //public static String BASE_SERVICE_URL_DEBUG = "http://112.6.110.50:6012/";
+    public static String BASE_SERVICE_URL_DEBUG = "http://192.168.1.123:6118/";
 
     public static String getBaseServiceUrl() {
         if (DEBUG) {
@@ -37,12 +40,11 @@ public class SystemConfig {
     /**
      * 客户端版本
      */
-    //public static String APP_VERSION = AppUtil.getVersionName(BaseApplication.getSelf());
+    public static String APP_VERSION = "1.0";//AppUtil.getVersionName(BaseApplication.getSelf());
 
     /**
      * 终端操作系统
      */
     public static final String APP_OS = "android";
-    public static final String APP_VERSION = "1.0";
 
 }

@@ -1,13 +1,22 @@
 package com.simin.rxjava2.http;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSON;
+import com.simin.rxjava2.BaseApplication;
 import com.simin.rxjava2.act.BaseActivity;
 import com.simin.rxjava2.http.entity.Response;
 import com.simin.rxjava2.http.entity.Header;
 import com.simin.rxjava2.http.entity.Keys;
+import com.simin.rxjava2.http.model.BaseModel;
 import com.simin.rxjava2.http.model.FileBody;
 import com.simin.rxjava2.http.model.Image;
 import com.simin.rxjava2.http.model.User;
+import com.simin.rxjava2.http.progress.DownloadProgressHandler;
+import com.simin.rxjava2.http.progress.ProgressHelper;
+import com.simin.rxjava2.interfaces.CallBack;
+import com.simin.rxjava2.utils.FileUtil;
+import com.simin.rxjava2.utils.UrlUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,6 +29,9 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * 作者：Fengsimin on 2017/12/13 13:13
@@ -32,16 +44,16 @@ public class HttpApiHelper {
      * ------------------------------------接口调用start---------------------------------------
      */
 
-    public void login(Map<String, String> params, DefautObserver<User> observer) {
+    public void login(Map<String, String> params, DefautObserver observer) {
         HttpApi.getInstance().apiService
                 .login(checkParams(params, null, null))
-                .compose(activity.<Response<User>>bindToLifecycle())
+                .compose(activity.<Response>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void uploadFile(String url, String filePath, Map<String, String> params, DefautObserver<Image> observer) {
+    public void uploadFile(String url, String filePath, Map<String, String> params, DefautObserver observer) {
         File file = new File(filePath);
         RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Builder builder = new MultipartBody.Builder()
@@ -53,13 +65,13 @@ public class HttpApiHelper {
         List<MultipartBody.Part> parts = builder.build().parts();
         HttpApi.getInstance().apiService
                 .uploadFile(url, parts)
-                .compose(activity.<Response<Image>>bindToLifecycle())
+                .compose(activity.<Response>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void uploadFiles(String url, List<String> files, Map<String, String> params, DefautObserver<Image> observer) {
+    public void uploadFiles(String url, List<String> files, Map<String, String> params, DefautObserver observer) {
         Map<String, RequestBody> bodys = new HashMap<>();
         for (String path : files) {
             File f = new File(path);
@@ -71,10 +83,31 @@ public class HttpApiHelper {
         }
         HttpApi.getInstance().apiService
                 .uploadFiles(url, bodys)
-                .compose(activity.<Response<Image>>bindToLifecycle())
+                .compose(activity.<Response>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
+    }
+
+    public void downloadFile(String url, DownloadProgressHandler handler, final CallBack<File> callBack) {
+        String fileName = UrlUtil.getFileName(url);
+        final File file = FileUtil.getAppFile(BaseApplication.getSelf(), fileName);
+        ProgressHelper.setProgressHandler(handler);
+        Call<ResponseBody> mCommCall = HttpApi.getInstance().apiService.downloadFile(url);
+        mCommCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                FileUtil.saveFile(response, file);
+                if (callBack != null)
+                    callBack.onSuccess(file);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (callBack != null)
+                    callBack.onFailure(t);
+            }
+        });
     }
 
     /**
@@ -141,7 +174,7 @@ public class HttpApiHelper {
         this.activity = activity;
     }
 
-    public void setActivity(BaseActivity activity) {
+    private void setActivity(BaseActivity activity) {
         this.activity = activity;
     }
 }

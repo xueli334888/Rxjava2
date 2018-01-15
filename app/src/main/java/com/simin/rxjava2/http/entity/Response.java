@@ -1,6 +1,7 @@
 package com.simin.rxjava2.http.entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.simin.rxjava2.http.model.BaseModel;
 
 import java.util.List;
 

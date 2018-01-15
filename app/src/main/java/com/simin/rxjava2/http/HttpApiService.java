@@ -10,6 +10,8 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
@@ -25,14 +27,17 @@ import retrofit2.http.Url;
 public interface HttpApiService {
 
     @FormUrlEncoded
-    @POST("JNnsyhZYDAppApi/personalDatum/login")
+    @POST("TSnsyhZYDAppApi/personalDatum/login")
     Observable<Response<User>> login(@FieldMap Map<String, String> param);
 
     @Multipart
     @POST()
-    Observable<Response<Image>> uploadFile(@Url String url, @Part List<MultipartBody.Part> partList);
+    Observable<Response<String>> uploadFile(@Url String url, @Part List<MultipartBody.Part> partList);
 
     @Multipart
     @POST()
-    Observable<Response<Image>> uploadFiles(@Url String url, @PartMap() Map<String, RequestBody> maps);
+    Observable<Response<String>> uploadFiles(@Url String url, @PartMap() Map<String, RequestBody> maps);
+
+    @POST()
+    Call<ResponseBody> downloadFile(@Url String url);
 }

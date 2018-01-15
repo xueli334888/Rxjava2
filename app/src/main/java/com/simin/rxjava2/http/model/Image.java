@@ -4,7 +4,7 @@ package com.simin.rxjava2.http.model;
  * 作者：Fengsimin on 2017/12/13 18:01
  */
 
-public class Image {
+public class Image extends BaseModel{
 
     private String url;
 
