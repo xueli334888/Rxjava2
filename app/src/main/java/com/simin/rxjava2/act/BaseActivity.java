@@ -24,8 +24,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     BaseApplication app;
 
-    ViewStub stub;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_title)
@@ -43,19 +41,12 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     protected void setContentView() {
-        setContentView(R.layout.base_activity_layout);
-        setContentRes();
-        initView();
-        initData();
-    }
-
-    protected void setContentRes() {
-        stub = findViewById(R.id.stub);
-        stub.setLayoutResource(getLayoutId());
-        stub.inflate();
+        setContentView(getLayoutId());
         ButterKnife.bind(this);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        initView();
+        initData();
     }
 
     protected void initView() {

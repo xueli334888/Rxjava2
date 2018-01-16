@@ -1,17 +1,11 @@
 package com.simin.rxjava2.http;
 
-import android.text.TextUtils;
-
 import com.alibaba.fastjson.JSON;
 import com.simin.rxjava2.BaseApplication;
 import com.simin.rxjava2.act.BaseActivity;
 import com.simin.rxjava2.http.entity.Response;
 import com.simin.rxjava2.http.entity.Header;
 import com.simin.rxjava2.http.entity.Keys;
-import com.simin.rxjava2.http.model.BaseModel;
-import com.simin.rxjava2.http.model.FileBody;
-import com.simin.rxjava2.http.model.Image;
-import com.simin.rxjava2.http.model.User;
 import com.simin.rxjava2.http.progress.DownloadProgressHandler;
 import com.simin.rxjava2.http.progress.ProgressHelper;
 import com.simin.rxjava2.interfaces.CallBack;

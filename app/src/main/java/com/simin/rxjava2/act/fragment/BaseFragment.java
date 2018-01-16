@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.simin.rxjava2.BaseApplication;
 import com.simin.rxjava2.utils.ToastUtil;
-import com.trello.rxlifecycle2.components.RxFragment;
+
+import butterknife.ButterKnife;
 
 /**
  * 作者：Fengsimin on 2017/12/12 15:01
@@ -15,16 +17,18 @@ import com.trello.rxlifecycle2.components.RxFragment;
 
 public abstract class BaseFragment extends RxFragment {
 
+    BaseApplication app;
+
     public View rootView;
-    public LayoutInflater inflater;
 
     @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        this.inflater = inflater;
+        app = BaseApplication.getSelf();
         if (rootView == null) {
             rootView = inflater.inflate(this.getLayoutId(), container, false);
+            ButterKnife.bind(this, rootView);
             init(savedInstanceState);
         }
         ViewGroup parent = (ViewGroup) rootView.getParent();

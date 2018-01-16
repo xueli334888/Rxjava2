@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.simin.rxjava2.act.MainActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.simin.rxjava2.act.MainActivity">
+
+    <include layout="@layout/s_toolbar_layout"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
         android:text="Hello World!"/>
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -26,11 +29,14 @@
         android:id="@+id/download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/button"
         android:text="Download"/>
 
     <LinearLayout
+        android:id="@+id/loadProgressLl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/download"
         android:padding="@dimen/dp_one_zero">
 
         <TextView
@@ -47,7 +53,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="%"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="%"/>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/contentPanel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></FrameLayout>
+
+    <sakura.bottomtabbar.BottomTabBar
+        android:id="@+id/BottomTabBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sakura.bottomtabbar.BottomTabBar>
 </LinearLayout>

@@ -5,6 +5,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.simin.rxjava2.R;
+import com.simin.rxjava2.act.fragment.FragmentA;
+import com.simin.rxjava2.act.fragment.FragmentB;
+import com.simin.rxjava2.act.fragment.FragmentC;
+import com.simin.rxjava2.act.fragment.FragmentD;
 import com.simin.rxjava2.cons.HttpUrl;
 import com.simin.rxjava2.http.DefautObserver;
 import com.simin.rxjava2.http.HttpApiHelper;
@@ -20,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import sakura.bottomtabbar.BottomTabBar;
 
 /**
  * 作者：Fengsimin on 2017/12/11 15:22
@@ -36,7 +41,9 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.loadProgress)
     TextView loadProgress;
 
-    //http://192.168.1.123:6118/FILE/APP/ZYDMobile.apk
+    @BindView(R.id.BottomTabBar)
+    BottomTabBar bottomTabBar;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -44,6 +51,15 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
+        bottomTabBar.initFragmentorViewPager(getSupportFragmentManager())
+                .addReplaceLayout(R.id.contentPanel)
+                .addTabItem("草莓", getResources().getDrawable(R.mipmap.ic_launcher), getResources().getDrawable(R.mipmap.ic_launcher_round), FragmentA.class)
+                .addTabItem("凤梨", getResources().getDrawable(R.mipmap.ic_launcher), getResources().getDrawable(R.mipmap.ic_launcher_round), FragmentB.class)
+                .addTabItem("樱桃", getResources().getDrawable(R.mipmap.ic_launcher), getResources().getDrawable(R.mipmap.ic_launcher_round), FragmentC.class)
+                .addTabItem("香蕉", getResources().getDrawable(R.mipmap.ic_launcher), getResources().getDrawable(R.mipmap.ic_launcher_round), FragmentD.class)
+                .commit();
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
