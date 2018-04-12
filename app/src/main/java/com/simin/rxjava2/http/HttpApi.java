@@ -38,6 +38,9 @@ public class HttpApi {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                     LogUtil.d(message);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                    LogUtil.d(message);
                 }
             }
         });

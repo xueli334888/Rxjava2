@@ -3,6 +3,7 @@
  */
 
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -114,7 +115,14 @@ public class DimenTool {
     }
 
     public static void main(String[] args) {
-        gen();
+        //gen();
+        int a = 100;
+        int b = 37;
+        int c = 40;
+        int multiple1 = a / b;
+        int multiple2 = a / c;
+        System.out.println("<!--  Math.min(100 / 37, 100 / 37) = 2.7 = -->" + multiple1);
+        System.out.println("<!--  Math.min(100 / 40, 100 / 40) = 2.5 = -->" + multiple2);
     }
 
 }

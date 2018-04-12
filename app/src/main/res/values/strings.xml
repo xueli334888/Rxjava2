@@ -6,4 +6,6 @@
     <string name="bad_network">当前网络太差</string>
     <string name="parse_error">解析错误</string>
     <string name="unknown_error">未知错误</string>
+
+    <string name="more">更多</string>
 </resources>

@@ -1,7 +1,5 @@
 package com.simin.rxjava2.cons;
 
-import com.simin.rxjava2.BaseApplication;
-
 /**
  * App基本配置
  * 打包地址配置
@@ -22,7 +20,7 @@ public class SystemConfig {
 
     public static String BASE_SERVICE_URL = "http://112.6.110.50:6012/";
     //public static String BASE_SERVICE_URL_DEBUG = "http://112.6.110.50:6012/";
-    public static String BASE_SERVICE_URL_DEBUG = "http://192.168.1.123:6118/";
+    public static String BASE_SERVICE_URL_DEBUG = "http://112.250.104.167:6311/";
 
     public static String getBaseServiceUrl() {
         if (DEBUG) {

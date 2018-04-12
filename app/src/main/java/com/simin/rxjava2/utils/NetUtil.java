@@ -24,6 +24,7 @@ public class NetUtil {
                 NetworkInfo info = connectivity.getActiveNetworkInfo();
                 if (info != null && info.isConnected()) {
                     if (info.getState() == NetworkInfo.State.CONNECTED) {
+                        LogUtil.d("连网了连网了");
                         return true;
                     }
                 }

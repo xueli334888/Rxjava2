@@ -1,5 +1,6 @@
 package com.simin.rxjava2.act;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -9,14 +10,13 @@ import com.simin.rxjava2.act.fragment.FragmentA;
 import com.simin.rxjava2.act.fragment.FragmentB;
 import com.simin.rxjava2.act.fragment.FragmentC;
 import com.simin.rxjava2.act.fragment.FragmentD;
-import com.simin.rxjava2.cons.HttpUrl;
 import com.simin.rxjava2.http.DefautObserver;
 import com.simin.rxjava2.http.HttpApiHelper;
 import com.simin.rxjava2.http.model.User;
 import com.simin.rxjava2.http.progress.DownloadProgressHandler;
-import com.simin.rxjava2.http.progress.ProgressHelper;
 import com.simin.rxjava2.interfaces.CallBack;
 import com.simin.rxjava2.utils.LogUtil;
+import com.simin.rxjava2.utils.PermissionsChecker;
 import com.simin.rxjava2.utils.ToastUtil;
 
 import java.io.File;
@@ -44,6 +44,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.BottomTabBar)
     BottomTabBar bottomTabBar;
 
+    private PermissionsChecker mPermissionsChecker; // 权限检测器
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -51,7 +53,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        super.initView();
+        setTitleName("主页");
+        setRightText(R.string.more);
 
+
+        new PermissionsChecker(this).lacsPermissions();
         bottomTabBar.initFragmentorViewPager(getSupportFragmentManager())
                 .addReplaceLayout(R.id.contentPanel)
                 .addTabItem("草莓", getResources().getDrawable(R.mipmap.ic_launcher), getResources().getDrawable(R.mipmap.ic_launcher_round), FragmentA.class)
@@ -63,7 +70,7 @@ public class MainActivity extends BaseActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProgressHelper.setProgressHandler(handler);
+                //ProgressHelper.setProgressHandler(handler);
                 login();
             }
 
@@ -85,7 +92,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        mPermissionsChecker = new PermissionsChecker(this);
+        // 缺少权限时, 进入权限配置页面
+        if (!mPermissionsChecker.lacksPermissions()) {
+            PermissionsActivity.startActivityForResult(this, 101, PermissionsChecker.permissions);
+        }
     }
 
     protected void login() {
@@ -112,4 +123,13 @@ public class MainActivity extends BaseActivity {
             }
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        if (requestCode == 101 && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+            finish();
+        }
+    }
 }

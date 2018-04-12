@@ -10,14 +10,19 @@ import com.simin.rxjava2.http.progress.DownloadProgressHandler;
 import com.simin.rxjava2.http.progress.ProgressHelper;
 import com.simin.rxjava2.interfaces.CallBack;
 import com.simin.rxjava2.utils.FileUtil;
+import com.simin.rxjava2.utils.LogUtil;
 import com.simin.rxjava2.utils.UrlUtil;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
@@ -45,6 +50,24 @@ public class HttpApiHelper {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
+    }
+
+    public void post(PostConfig config) {
+        try {
+            Method m = HttpApi.getInstance().apiService.getClass().getDeclaredMethod(config.method, Map.class);
+            //ParameterizedType type = (ParameterizedType) config.t.getClass().getGenericSuperclass();
+            Observable observable = (Observable) m.invoke(HttpApi.getInstance().apiService, config.params);
+            observable.compose(activity.<Response>bindToLifecycle())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(config.observer);
+        } catch (NoSuchMethodException e) {
+            LogUtil.d(e.toString());
+        } catch (IllegalAccessException e) {
+            LogUtil.d(e.toString());
+        } catch (InvocationTargetException e) {
+            LogUtil.d(e.toString());
+        }
     }
 
     public void uploadFile(String url, String filePath, Map<String, String> params, DefautObserver observer) {

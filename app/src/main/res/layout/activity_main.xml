@@ -6,7 +6,8 @@
               android:orientation="vertical"
               tools:context="com.simin.rxjava2.act.MainActivity">
 
-    <include layout="@layout/s_toolbar_layout"/>
+    <include
+        layout="@layout/s_toolbar_layout"/>
 
     <TextView
         android:id="@+id/textView"
@@ -66,5 +67,6 @@
     <sakura.bottomtabbar.BottomTabBar
         android:id="@+id/BottomTabBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></sakura.bottomtabbar.BottomTabBar>
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>

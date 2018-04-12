@@ -28,11 +28,11 @@ public class CustomProgressDialog extends Dialog implements DialogI {
 
     @Override
     public void show() {
-
+        super.show();
     }
 
     @Override
     public void dismiss() {
-
+        super.dismiss();
     }
 }
